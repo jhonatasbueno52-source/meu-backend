@@ -20,5 +20,10 @@ app.use('/api/shopee', shopeeRoutes);
 app.use('/api/nfe', nfeRoutes);
 app.use('/api/automacao', automacaoRoutes);
 
+// ROTA DE TESTE – coloque aqui
+app.get('/teste', (req, res) => {
+  res.send('Backend online!');
+});
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`));
