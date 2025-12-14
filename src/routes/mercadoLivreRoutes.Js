@@ -14,5 +14,8 @@ router.post('/refresh-token', refreshMLToken);
 router.get('/sync-orders', syncOrdersML);
 router.post('/update-stock', updateStockML);
 router.post('/send-tracking', sendTrackingCodeML);
+router.get('/teste', (req, res) => {
+  res.send('Rota Mercado Livre online!');
+});
 
 export default router;
