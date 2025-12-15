@@ -21,7 +21,7 @@ router.get('/teste', (req, res) => {
   res.send('Rota Mercado Livre online!');
 });
 
-// Rota de login (redireciona para Mercado Livre)
+// Rota de login
 router.get('/login', (req, res) => {
   const authUrl = `https://auth.mercadolivre.com.br/authorization?response_type=code&client_id=${process.env.ML_CLIENT_ID}&redirect_uri=${process.env.ML_REDIRECT_URI}`;
   res.redirect(authUrl);
