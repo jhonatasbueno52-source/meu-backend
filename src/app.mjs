@@ -1,29 +1,30 @@
 import express from 'express';
-import cors from 'cors';
-import dotenv from 'dotenv';
+import {
+  authenticateMercadoLivre,
+  refreshMLToken,
+  syncOrdersML,
+  updateStockML,
+  sendTrackingCodeML
+} from '../controllers/mercadoLivreController.mjs';
 
-import mercadoLivreRoutes from './routes/mercadoLivreRoutes.js';
-import shopeeRoutes from './routes/shopeeRoutes.js';
-import nfeRoutes from './routes/nfeRoutes.js';
-import automacaoRoutes from './routes/automacaoRoutes.js';
+const router = express.Router();
 
-dotenv.config();
+// Rotas principais
+router.post('/authenticate', authenticateMercadoLivre);
+router.post('/refresh-token', refreshMLToken);
+router.get('/sync-orders', syncOrdersML);
+router.post('/update-stock', updateStockML);
+router.post('/send-tracking', sendTrackingCodeML);
 
-const app = express();
-
-app.use(cors());
-app.use(express.json());
-
-// rotas
-app.use('/api/mercado-livre', mercadoLivreRoutes);
-app.use('/api/shopee', shopeeRoutes);
-app.use('/api/nfe', nfeRoutes);
-app.use('/api/automacao', automacaoRoutes);
-
-// ROTA DE TESTE – coloque aqui
-app.get('/teste', (req, res) => {
-  res.send('Backend online!');
+// Rota de teste
+router.get('/teste', (req, res) => {
+  res.send('Rota Mercado Livre online!');
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`));
+// Rota de login (redireciona para Mercado Livre)
+router.get('/login', (req, res) => {
+  const authUrl = `https://auth.mercadolivre.com.br/authorization?response_type=code&client_id=${process.env.ML_CLIENT_ID}&redirect_uri=${process.env.ML_REDIRECT_URI}`;
+  res.redirect(authUrl);
+});
+
+export default router;
