@@ -5,7 +5,7 @@ import {
   syncOrdersML,
   updateStockML,
   sendTrackingCodeML
-} from '../controllers/mercadoLivreController.mjs';
+} from '../routes/mercadoLivreController.mjs';
 
 const router = express.Router();
 
